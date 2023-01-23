@@ -25,11 +25,11 @@ let persons = [
   }
 ]
 
-app.get('/api/persons', (request, response) => {
+app.get("/api/persons", (request, response) => {
   response.json(persons)
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get("/api/persons/:id", (request, response) => {
   const id = Number(request.params.id)
   const person = persons.find(person => person.id === id)
   if (person) {
@@ -39,7 +39,7 @@ app.get('/api/persons/:id', (request, response) => {
   }
 })
 
-app.get('/info', (request, response) => {
+app.get("/info", (request, response) => {
   const numberOfPersons = persons.length
   const time = new Date().toUTCString()
   response.send(
@@ -48,10 +48,31 @@ app.get('/info', (request, response) => {
   )
 })
 
-app.delete('/api/persons/:id', (request, response) => {
+app.delete("/api/persons/:id", (request, response) => {
   const id = Number(request.params.id)
   persons = persons.filter(person => person.id !== id)
   response.status(204).end()
+})
+
+const generateId = () => {
+  const id = Math.floor(Math.random() * 10000000)
+  return id
+}
+
+app.post("/api/persons", (request, response) => {
+  const body = request.body
+  if (!body.name || !body.number) {
+    return response.status(400).json({
+      error: "name or number missing"
+    })
+  }
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: generateId(),
+  }
+  persons = persons.concat(person)
+  response.json(person)
 })
 
 const PORT = 3001
