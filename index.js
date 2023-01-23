@@ -8,6 +8,7 @@ app = express()
 app.use(express.json())
 app.use(logger)
 app.use(cors())
+app.use(express.static("build"))
 
 let persons = [
   {
