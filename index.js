@@ -1,6 +1,10 @@
 const express = require("express")
+const morgan = require("morgan")
+
+logger = morgan("tiny")
 app = express()
 app.use(express.json())
+app.use(logger)
 
 let persons = [
   {
