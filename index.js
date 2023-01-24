@@ -43,13 +43,17 @@ app.get("/api/persons", (request, response) => {
 })
 
 app.get("/api/persons/:id", (request, response) => {
-  const id = Number(request.params.id)
-  const person = persons.find(person => person.id === id)
-  if (person) {
-    response.json(person)
-  } else {
-    response.status(404).end()
-  }
+  Person.findById(request.params.id)
+    .then(result=> {
+      if (result) {
+        responses.json(result)
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => {
+      response.status(500).end()
+    })
 })
 
 app.get("/info", (request, response) => {
