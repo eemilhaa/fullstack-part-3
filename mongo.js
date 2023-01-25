@@ -1,8 +1,8 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 
 const getArgs = () => {
   if (process.argv.length<3) {
-    console.log('give password as argument')
+    console.log("give password as argument")
     process.exit(1)
   }
   return {
@@ -17,7 +17,7 @@ const {password, name, number} = getArgs()
 const url =
   `mongodb+srv://fullstack:${password}@cluster0.ooro7n6.mongodb.net/fullstack-3?retryWrites=true&w=majority`
 
-mongoose.set('strictQuery', false)
+mongoose.set("strictQuery", false)
 mongoose.connect(url)
 
 const personSchema = new mongoose.Schema({
@@ -25,7 +25,7 @@ const personSchema = new mongoose.Schema({
   number: String,
   id: Number,
 })
-const Person = mongoose.model('Person', personSchema)
+const Person = mongoose.model("Person", personSchema)
 
 const addPerson = (name, number) => {
   const person = new Person({
