@@ -55,12 +55,14 @@ app.get("/api/persons/:id", (request, response, next) => {
 })
 
 app.get("/info", (request, response) => {
-  const numberOfPersons = persons.length
   const time = new Date().toUTCString()
-  response.send(
-    `Phonebook has info for ${numberOfPersons} people <br />
-    ${time}`
-  )
+  Person.count({})
+    .then(result => {
+      response.send(
+        `Phonebook has info for ${result} people <br />
+        ${time}`
+      )
+    })
 })
 
 app.delete("/api/persons/:id", (request, response, next) => {
